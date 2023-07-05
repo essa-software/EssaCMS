@@ -45,11 +45,16 @@ async fn handle_page(
     path: &str,
 ) -> Result<Html<String>, (StatusCode, String)> {
     let server = server.read().await;
-    let page_input =
-        match server.read_file(&path::Path::new("pages").join(path).with_extension("html")) {
-            Ok(i) => i,
-            Err(e) => return Err((StatusCode::NOT_FOUND, format!("Failed to read file: {}", e))),
-        };
+
+    let mut path = path::Path::new("pages").join(path);
+    if !path.extension().is_some() {
+        path.set_extension("html");
+    }
+
+    let page_input = match server.read_file(&path) {
+        Ok(i) => i,
+        Err(e) => return Err((StatusCode::NOT_FOUND, format!("Failed to read file: {}", e))),
+    };
     let page = server.template.replace("{{content}}", &page_input);
     return Ok(Html(page));
 }
