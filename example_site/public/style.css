@@ -1,0 +1,20 @@
+* {
+    box-sizing: border-box;
+}
+body {
+    font-family: sans-serif;
+    margin: 0;
+    width: 1000px;
+    max-width: 100%;
+    margin: auto;
+}
+nav {
+    padding: 2em;
+    background-color: #dddddd;
+    display: flex;
+    gap: 1em;
+}
+main {
+    padding: 2em;
+    background-color: #eeeeee;
+}
